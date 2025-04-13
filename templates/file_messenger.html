@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>File Messenger</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Pacifico&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(145deg, #000b3a, #001b66);
+      color: #e6f2ff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #9cf, 0 0 12px #cce6ff;
+      animation: float 12s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    h2 {
+      text-align: center;
+      padding: 40px 20px 10px;
+      font-family: 'Pacifico', cursive;
+      font-size: 36px;
+      color: #cce6ff;
+      text-shadow: 0 0 15px #99ccff;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto 60px;
+      padding: 30px;
+      background: rgba(0, 51, 102, 0.2);
+      border-radius: 20px;
+      backdrop-filter: blur(25px);
+      box-shadow: 0 0 30px rgba(0, 102, 204, 0.3);
+      z-index: 1;
+      position: relative;
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 10px;
+      transition: background 0.3s ease;
+    }
+
+    .user:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .user img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      margin-right: 20px;
+      border: 2px solid #99ccff;
+    }
+
+    .user a {
+      text-decoration: none;
+      color: #e6f2ff;
+      font-weight: bold;
+      font-size: 18px;
+      text-shadow: 0 0 8px #99ccff;
+    }
+
+    .user a:hover {
+      color: #ffffff;
+    }
+
+    .gpt-girl {
+      position: absolute;
+      bottom: -20px;
+      right: 10px;
+      max-width: 180px;
+      opacity: 0.95;
+      filter: drop-shadow(0 0 20px #cce6ff);
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+  <h2>Welcome, {{ current_user }} 👑 | File Messenger</h2>
+  <div class="container">
+    {% for user in users %}
+      {% if user.username != current_user %}
+        <div class="user">
+          <div style="display: flex; align-items: center;">
+            <img src="{{ user.profile_pic or '/static/default_profile.jpg' }}" alt="profile">
+            <a href="{{ url_for('file_chat_ui', contact=user.username) }}">{{ user.username }}</a>
+            
+          </div>
+          
+        </div>
+        
+      {% endif %}
+    {% endfor %}
+    <a href="/home" style="margin-left: 10px; font-size: 14px; color: #99ccff;">Home</a>
+  </div>
+  
+  <script>
+    const stars = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.animationDuration = (5 + Math.random() * 7) + 's';
+      stars.appendChild(star);
+    }
+  </script>
+</body>
+</html>

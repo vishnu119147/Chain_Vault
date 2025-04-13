@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CHAINVAULT | Enter the Network</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Share Tech Mono', monospace;
+      background: #000;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      width: 300%;
+      height: 300%;
+      background: radial-gradient(circle, rgba(0,255,255,0.08), transparent 70%);
+      animation: bgMotion 50s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes bgMotion {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-50%, -50%); }
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .typewriter {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      color: #00fff7;
+      border-right: 2px solid #00fff7;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(30, end) forwards, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .subtext {
+      color: #ccc;
+      font-size: 1.1rem;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards 4.2s;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .buttons {
+      margin-top: 40px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards 5.2s;
+    }
+
+    .btn {
+      padding: 14px 32px;
+      background: linear-gradient(90deg, #00fff7, #ff00c1);
+      color: black;
+      font-weight: bold;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #00fff7;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px #ff00c1;
+    }
+
+    .features {
+      margin-top: 80px;
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease-out;
+    }
+
+    .features.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+    }
+
+    .feature h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #00fff7;
+    }
+
+    .feature p {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #777;
+      font-size: 0.85rem;
+    }
+
+    /* Background Music */
+    #bg-music {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 10;
+      opacity: 0.5;
+    }
+
+    #bg-music:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      .typewriter {
+        font-size: 2rem;
+      }
+
+      .feature {
+        padding: 20px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bg-music" autoplay loop muted>
+    <source src="https://assets.codepen.io/605876/bg-synth.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="hero">
+    <div class="typewriter">CHAINVAULT: Enter the Network</div>
+    <div class="subtext">Secure blockchain chat & file sharing. No middlemen. No compromise.</div>
+    <div class="buttons">
+      <a href="/login" class="btn">Login</a>
+      <a href="/register" class="btn">Join the Vault</a>
+    </div>
+  </div>
+
+  <div class="features" id="feature-section">
+    <div class="feature">
+      <h3>🛡️ End-to-End Encryption</h3>
+      <p>Every message, every file — encrypted client-side. Zero data exposure.</p>
+    </div>
+    <div class="feature">
+      <h3>🔗 Blockchain Backed</h3>
+      <p>Immutable and decentralized. Your data is yours — forever.</p>
+    </div>
+    <div class="feature">
+      <h3>🚀 Lightning Fast</h3>
+      <p>Real-time communication built for speed and security.</p>
+    </div>
+    <div class="feature">
+      <h3>🧠 AI-integrated</h3>
+      <p>Smart reply, sentiment detection & advanced search, powered by AI.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 ChainVault. This is the future. Welcome to it.
+  </div>
+
+  <script>
+    const featureSection = document.getElementById('feature-section');
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY + window.innerHeight;
+      const featureOffset = featureSection.offsetTop + 100;
+      if (scrollPos >= featureOffset) {
+        featureSection.classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>

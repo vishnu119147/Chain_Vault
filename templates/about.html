@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - ChainVault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: radial-gradient(circle at top, #0a0a23, #111);
+      color: #eee;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    canvas#starCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      color: #00ffe0;
+      text-shadow: 0 0 10px #00ffe0;
+    }
+
+    header p {
+      max-width: 800px;
+      margin: 20px auto 0;
+      font-size: 1.1rem;
+      color: #cfcfcf;
+    }
+
+    section.description {
+      margin-bottom: 40px;
+      text-align: center;
+      background: rgba(20, 30, 48, 0.9);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+    }
+
+    section.description h2 {
+      font-family: 'Orbitron', sans-serif;
+      color: #66f;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    section.description p {
+      max-width: 900px;
+      margin: auto;
+      line-height: 1.7;
+      color: #ddd;
+    }
+
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px 0;
+    }
+
+    .member {
+      background: #1a1a2e;
+      padding: 20px;
+      width: 280px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .member:hover {
+      transform: scale(1.05);
+    }
+
+    .member img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #00ffe0;
+    }
+
+    .member h3 {
+      font-family: 'Orbitron', sans-serif;
+      margin: 10px 0 5px;
+      color: #00ffe0;
+    }
+
+    .member p {
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      background: #111;
+      color: #666;
+    }
+
+    .guide-section {
+  text-align: center;
+  margin: 60px 0;
+}
+
+.guide-card {
+  margin: 0 auto;
+  max-width: 400px;
+  background-color: rgba(30, 41, 59, 0.9);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 132, 255, 0.3);
+  overflow: hidden;
+}
+
+.guide-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+  color: #e2e8f0;
+}
+
+.card-body h5 {
+  font-size: 1.3rem;
+  color: #38bdf8;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 10px;
+}
+
+.card-body p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
+  </style>
+</head>
+<body>
+  <canvas id="starCanvas"></canvas>
+  <div class="container">
+    <header>
+      <h1>About ChainVault</h1>
+      <p>Welcome to ChainVault — a next-generation blockchain-based, end-to-end encrypted chat and file sharing platform designed for privacy, security, and freedom.</p>
+    </header>
+
+    <section class="description">
+      <h2>Our Mission</h2>
+      <p>
+        ChainVault ensures that your conversations and file transfers are completely private and tamper-proof. Built on blockchain technology, our app leverages decentralized infrastructure and military-grade encryption to keep your data safe from prying eyes — no central authority, no compromises.
+      </p>
+    </section>
+
+    <section class="description">
+      <h2>Our Roots: BIET Davangere</h2>
+      <p>
+        This project is proudly developed by students from <strong>Bapuji Institute of Engineering and Technology (BIET), Davangere</strong> — an institution known for nurturing innovation, technical excellence, and forward-thinking engineers. With the vision of building a better digital future, we strive to blend blockchain technology with real-world applications.
+      </p>
+    </section>
+
+    <div class="team">
+      <div class="member">
+        
+        <h3>Member One</h3>
+        <p>Maddela Guna Naga Vishnu</p>
+      </div>
+      <div class="member">
+        
+        <h3>Member Two</h3>
+        <p>Kruthik R</p>
+      </div>
+      <div class="member">
+        
+        <h3>Member Three</h3>
+        <p>DH Prajwal</p>
+      </div>
+    </div>
+    <div class="guide-section">
+        <h3>✨ Our Guiding Star</h3>
+        <div class="guide-card">
+          
+          <div class="card-body">
+            <h5>Dr. Jyothi G C</h5>
+            <p>Department of Computer Science<br>BIET Davangere</p>
+            <p><em>"With vision, wisdom, and endless patience, you helped guide this journey."</em></p>
+          </div>
+        </div>
+      </div>
+      
+      
+
+    <footer>
+      © 2025 ChainVault · Built with ❤️ at BIET Davangere
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('starCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    let stars = [];
+
+    document.addEventListener('mousemove', function(e) {
+      for (let i = 0; i < 5; i++) {
+        stars.push({
+          x: e.clientX,
+          y: e.clientY,
+          radius: Math.random() * 2 + 1,
+          alpha: 1,
+          dx: (Math.random() - 0.5) * 2,
+          dy: (Math.random() - 0.5) * 2
+        });
+      }
+    });
+
+    function animateStars() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < stars.length; i++) {
+        let star = stars[i];
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 255, 255, ${star.alpha})`;
+        ctx.fill();
+        star.x += star.dx;
+        star.y += star.dy;
+        star.alpha -= 0.01;
+        if (star.alpha <= 0) {
+          stars.splice(i, 1);
+          i--;
+        }
+      }
+      requestAnimationFrame(animateStars);
+    }
+
+    animateStars();
+
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+  </script>
+</body>
+</html>

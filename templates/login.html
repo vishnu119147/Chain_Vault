@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | ChainVault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      background: radial-gradient(circle at top left, #0f0c29, #302b63, #24243e);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: #fff;
+      position: relative;
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 420px;
+      padding: 50px 35px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(25px);
+      box-shadow: 0 0 60px rgba(255, 64, 129, 0.2);
+      animation: slideUp 1s ease-out;
+    }
+
+    .login-container h2 {
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+      font-weight: 600;
+      text-shadow: 0 0 15px rgba(255, 64, 129, 0.5);
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 18px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1rem;
+      transition: 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 15px rgba(255, 64, 129, 0.5);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ff4081, #ff85b3);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(255, 64, 129, 0.3);
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #ff79a7, #ffc0cb);
+      box-shadow: 0 0 30px rgba(255, 64, 129, 0.6);
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #eee;
+    }
+
+    .footer a {
+      color: #ff79a7;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes slideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .rings {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .rings div {
+      position: absolute;
+      border: 2px solid rgba(255, 64, 129, 0.3);
+      border-radius: 50%;
+      animation: pulse 6s infinite ease-in-out;
+    }
+
+    .rings div:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .rings div:nth-child(2) {
+      width: 250px;
+      height: 250px;
+      bottom: 15%;
+      right: 20%;
+      animation-delay: 2s;
+    }
+
+    .rings div:nth-child(3) {
+      width: 180px;
+      height: 180px;
+      top: 70%;
+      left: 65%;
+      animation-delay: 4s;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.4;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Star Trail Canvas -->
+  <canvas id="star-canvas"></canvas>
+
+  <div class="rings">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div class="login-container">
+    <h2>Login to ChainVault</h2>
+    <input type="text" id="login-username" placeholder="Username" />
+    <input type="password" id="login-password" placeholder="Password" />
+    <button class="btn" onclick="login()">Login</button>
+    <p class="footer">Don't have an account? <a href="/register">Sign up</a></p>
+  </div>
+
+  <!-- Star Stream Script -->
+  <script>
+    const canvas = document.getElementById('star-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    document.addEventListener('mousemove', (e) => {
+      for (let i = 0; i < 3; i++) {
+        stars.push({
+          x: e.clientX,
+          y: e.clientY,
+          size: Math.random() * 2 + 1,
+          alpha: 1,
+          dx: (Math.random() - 0.5) * 2,
+          dy: (Math.random() - 0.5) * 2
+        });
+      }
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach((star, i) => {
+        star.x += star.dx;
+        star.y += star.dy;
+        star.alpha -= 0.02;
+        if (star.alpha <= 0) stars.splice(i, 1);
+
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+  <script>
+    function login() {
+      const user = document.getElementById("login-username").value;
+      const pass = document.getElementById("login-password").value;
+      fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: user, password: pass }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.message === "Login successful") {
+            localStorage.setItem("username", user);
+            window.location.href = "/home";
+          } else {
+            alert("Invalid credentials");
+          }
+        });
+    }
+  </script>
+</body>
+</html>

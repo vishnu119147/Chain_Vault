@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChainVault Home</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(ellipse at top, #0f0c29, #302b63, #24243e);
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #ff79a7;
+      text-shadow: 0 0 10px #ff79a7;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(25px);
+      border-radius: 24px;
+      box-shadow: 0 0 60px rgba(255, 64, 129, 0.2);
+      animation: fadeIn 1.2s ease-out;
+      z-index: 1;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.7rem;
+      color: #fff;
+      text-shadow: 0 0 15px #ff79a7;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      margin-top: 20px;
+      color: #ccc;
+      font-weight: 400;
+    }
+
+    /* Messages */
+    .messages {
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      margin-top: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Scrollbar */
+    .messages::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .messages::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+
+    /* Contact Card */
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      position: relative;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    .contact-card:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 0 30px rgba(255, 121, 167, 0.3);
+    }
+
+    .contact-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+      border-radius: 14px;
+    }
+
+    .contact-card:active::after {
+      opacity: 1;
+    }
+
+    .contact-card img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ff79a7;
+      box-shadow: 0 0 10px #ff79a7;
+    }
+
+    /* Fade-in Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Stars */
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: floatStars 10s linear infinite;
+    }
+
+    @keyframes floatStars {
+      0% {
+        transform: translateY(0);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    /* Mouse Trail */
+    .trail {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.7;
+      animation: fadeTrail 0.8s linear forwards;
+    }
+
+    @keyframes fadeTrail {
+      to {
+        transform: scale(0.2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <ul>
+      <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="/contacts"><i class="fas fa-paper-plane"></i> Send Message</a></li>
+      <li><a href="/contacts"><i class="fas fa-users"></i> Contacts</a></li>
+      <li><a href="/file_messenger"><i class="fas fa-file-upload"></i> Send File</a></li>
+      <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+    </ul>
+    <ul>
+      <li><a href="/profile"><i class="fas fa-user"></i> Profile</a></li>
+      <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Home Content -->
+  <div class="container">
+    <h1>Welcome, {{ current_user }}</h1>
+    <h3>Recent Contacts</h3>
+    <div id="recentContacts" class="messages">
+      <p>Loading recent contacts...</p>
+    </div>
+  </div>
+
+  <script>
+    // Floating stars
+    const starField = document.getElementById("stars");
+    for (let i = 0; i < 80; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * 100 + "vh";
+      star.style.left = Math.random() * 100 + "vw";
+      star.style.animationDuration = (5 + Math.random() * 10) + "s";
+      starField.appendChild(star);
+    }
+
+    // Cursor trail
+    document.addEventListener("mousemove", function(e) {
+      const trail = document.createElement("div");
+      trail.className = "trail";
+      trail.style.top = `${e.clientY}px`;
+      trail.style.left = `${e.clientX}px`;
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 800);
+    });
+
+    // Fetch contacts
+    window.onload = function () {
+      fetch('/recent_contacts')
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById('recentContacts');
+          container.innerHTML = '';
+          if (!data || data.length === 0) {
+            container.innerHTML = '<p>No recent conversations yet.</p>';
+            return;
+          }
+
+          data.forEach(contact => {
+            const name = contact._id;
+            const profilePicture = contact.profile_picture || '/static/default_profile.jpg';
+
+            const card = document.createElement("div");
+            card.className = "contact-card";
+            card.onclick = () => {
+              window.location.href = `/chat?user=${name}`;
+            };
+
+            card.innerHTML = `
+              <img src="${profilePicture}" alt="${name}'s profile">
+              <strong>${name}</strong>
+            `;
+
+            container.appendChild(card);
+          });
+        })
+        .catch(err => {
+          document.getElementById('recentContacts').innerHTML = `<p>Error loading contacts.</p>`;
+          console.error("Error fetching contacts:", err);
+        });
+    };
+  </script>
+</body>
+</html>

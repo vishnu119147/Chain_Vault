@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChainVault Contacts</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(ellipse at top, #0f0c29, #302b63, #24243e);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: floatStars 12s linear infinite;
+    }
+
+    @keyframes floatStars {
+      0% {
+        transform: translateY(0);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1;
+      position: relative;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #ff79a7;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 80px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      box-shadow: 0 0 50px rgba(255, 64, 129, 0.15);
+      animation: fadeIn 1s ease-out;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #fff;
+      text-shadow: 0 0 12px #ff79a7;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .user-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .user-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 0px 20px #ff79a7;
+    }
+
+    .user-card img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ff79a7;
+      margin-bottom: 10px;
+    }
+
+    .user-card h3 {
+      color: #fff;
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .status-dot {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: limegreen;
+      box-shadow: 0 0 6px limegreen;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <div class="navbar">
+    <ul>
+      <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="/contacts"><i class="fas fa-comments"></i> Messages</a></li>
+      <li><a href="/contacts"><i class="fas fa-users"></i> Contacts</a></li>
+      <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+    </ul>
+    <ul>
+      <li><a href="/profile"><i class="fas fa-user"></i> Profile</a></li>
+      <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <h1>Your Cosmic Contacts</h1>
+    <div class="contacts-grid">
+      {% for user in users %}
+        {% if user.username != current_user %}
+          <div class="user-card" onclick="startChat('{{ user.username }}')">
+            <div class="status-dot"></div>
+            <img src="{{ user.profile_pic }}" alt="{{ user.username }}">
+            <h3>{{ user.username }}</h3>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    function startChat(user) {
+      window.location.href = "/chat?user=" + user;
+    }
+
+    // Star background
+    const starField = document.getElementById("stars");
+    for (let i = 0; i < 60; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * 100 + "vh";
+      star.style.left = Math.random() * 100 + "vw";
+      star.style.animationDuration = (6 + Math.random() * 10) + "s";
+      starField.appendChild(star);
+    }
+  </script>
+</body>
+</html>

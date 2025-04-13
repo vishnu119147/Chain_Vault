@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>File Chat </title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(ellipse at top, #0a0e1a, #000);
+      color: #d4e9ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Pacifico', cursive;
+      font-size: 36px;
+      padding: 30px 20px 0;
+      color: #d0e3ff;
+      text-shadow: 0 0 15px #8ab6ff;
+      z-index: 1;
+      position: relative;
+    }
+
+    .chat-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 25px rgba(100, 150, 255, 0.3);
+      backdrop-filter: blur(20px);
+      z-index: 1;
+      position: relative;
+    }
+
+    .file-message {
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 10px rgba(173, 216, 230, 0.2);
+      color: #cce6ff;
+    }
+
+    .file-message.sent {
+      text-align: right;
+      background: rgba(0, 128, 255, 0.2);
+    }
+
+    .file-message.received {
+      text-align: left;
+      background: rgba(0, 204, 255, 0.1);
+    }
+
+    .upload-form {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .upload-form input[type="file"] {
+      margin-bottom: 15px;
+      color: #b0cfff;
+    }
+
+    .upload-form button {
+      padding: 10px 30px;
+      background: linear-gradient(145deg, #0048ff, #00bfff);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+    }
+
+    .upload-form button:hover {
+      background: linear-gradient(145deg, #0055ff, #00ccff);
+    }
+
+    .gpt-girl {
+      position: absolute;
+      bottom: -10px;
+      right: 20px;
+      max-width: 180px;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 20px #8ab6ff);
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <h2>File Chat with {{ chat_with }} 👑</h2>
+
+  <div class="chat-container">
+    <div id="messages"></div>
+
+    <form class="upload-form" id="fileForm" enctype="multipart/form-data">
+      <input type="file" name="file" id="fileInput" required />
+      <input type="hidden" name="receiver" value="{{ chat_with }}">
+      <br>
+      <a href="/home" style="color: #a3d4ff; text-decoration: none;">Back</a>
+      <button type="submit">Send File</button>
+    </form>
+  </div>
+
+  
+  <script>
+    const stars = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.animationDuration = (5 + Math.random() * 5) + 's';
+      stars.appendChild(star);
+    }
+
+    const chatWith = "{{ chat_with }}";
+    const messagesDiv = document.getElementById("messages");
+
+    function loadMessages() {
+      fetch(`/get_file_messages?user=${chatWith}`)
+        .then(res => res.json())
+        .then(data => {
+          messagesDiv.innerHTML = "";
+          data.files.forEach(msg => {
+            const div = document.createElement("div");
+            div.className = "file-message " + (msg.sender === "{{ current_user }}" ? "sent" : "received");
+            div.innerHTML = `<b>${msg.sender}</b>: <a href="${msg.file_url}" download style="color:#a3d4ff;">${msg.filename || 'Download file'}</a>`;
+            messagesDiv.appendChild(div);
+          });
+        });
+    }
+
+    document.getElementById("fileForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch("/send_file_message", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.message) {
+          loadMessages();
+          this.reset();
+        }
+      });
+    });
+
+    loadMessages();
+    setInterval(loadMessages, 5000);
+  </script>
+</body>
+</html>
