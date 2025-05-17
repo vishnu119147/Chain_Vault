@@ -30,13 +30,21 @@ original_messages = db["original_messages"]
 file_messages = db["file_messages"]
 
 SENDER_EMAIL = "gunav119147@gmail.com"
+<<<<<<< HEAD
 SENDER_PASSWORD = "iuhz vung lggz vzjl" 
+=======
+SENDER_PASSWORD = "" 
+>>>>>>> 5a6eef2697ec3f93f7daa999391f9d2a8c6f7842
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'gunav119147@gmail.com'  # replace with your email
+<<<<<<< HEAD
 app.config['MAIL_PASSWORD'] = 'iuhz vung lggz vzjl'     # use an App Password if using Gmail
+=======
+app.config['MAIL_PASSWORD'] = ''     # use an App Password if using Gmail
+>>>>>>> 5a6eef2697ec3f93f7daa999391f9d2a8c6f7842
 mail = Mail(app)
 
 otp_store = {}
